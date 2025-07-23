@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import './App.css';
 import { calculateEntropy } from './utils/entropyCalculator';
+import { containsCommonWord } from './utils/checkCommonWords';
 
 function App() {
   const [password, setPassword] = useState('');
   const entropy = calculateEntropy(password);
+  const hasCommonWord = containsCommonWord(password);
 
   const getStrengthLabel = () => {
     if (entropy === 0) return 'Too Weak';
@@ -26,6 +28,11 @@ function App() {
       <div className="results">
         <p><strong>Entropy:</strong> {entropy} bits</p>
         <p><strong>Strength:</strong> {getStrengthLabel()}</p>
+        {hasCommonWord && (
+          <p style={{ color: 'red' }}>
+            ⚠️ This password contains a common or weak word.
+          </p>
+        )}
       </div>
     </div>
   );

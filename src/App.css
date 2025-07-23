@@ -23,3 +23,8 @@ input {
 strong {
   color: #0066ff;
 }
+
+.results p.warning {
+  color: red;
+  font-weight: bold;
+}
