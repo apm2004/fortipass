@@ -3,6 +3,8 @@ import './App.css';
 import { calculateEntropy } from './utils/entropyCalculator';
 import { containsCommonWord } from './utils/checkCommonWords';
 import { checkPasswordBreach } from './utils/checkBreach';
+import { getSuggestions } from './utils/suggestions';
+
 
 function App() {
   const [password, setPassword] = useState('');
@@ -10,6 +12,8 @@ function App() {
 
   const entropy = calculateEntropy(password);
   const hasCommonWord = containsCommonWord(password);
+  const suggestions = getSuggestions(password);
+
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -30,6 +34,10 @@ function App() {
   };
 
   return (
+    <div>
+      <div className="text-3xl font-bold underline text-center text-blue-600 mt-10">
+        FortiPass is Live with Tailwind!
+      </div>
     <div className="app">
       <h1>FortiPass 🔐</h1>
       <input
@@ -66,7 +74,20 @@ function App() {
             ⚠️ Couldn’t check breach status. Please try again later.
           </p>
         )}
+
+        {suggestions.length > 0 && (
+          <div style={{ marginTop: '1rem' }}>
+            <p><strong>Suggestions:</strong></p>
+            <ul>
+              {suggestions.map((s, idx) => (
+                <li key={idx}>✅ {s}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
       </div>
+    </div>
     </div>
   );
 }
